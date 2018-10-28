@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Beltline Tour</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+
+<style>
+#map {
+    position: fixed;
+    width:50%;
+}
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+</style>
+
+<div id='map'></div>
+<div id='features'>
+    <section id='beltline' class='active'>
+        <h3>Beltline</h3>
+        <p>The Beltline is a Rails to Trails project encircling Atlanta. Ryan Gravel's 1999 thesis at Georgia Tech, the project ultimately plans to bind 22 miles of trail around the city, connecting neighborhoods and communities like never before. The project's initial phases are nearly complete, spurring a flood of economic development in once-ignored neighborhoods.</p>
+		<small id="citation">
+            Visit the <a href='https://beltline.org'/>BeltLine</a>
+        </small>
+	</section>
+    <section id='piedmont-park'>
+        <h3>Piedmont Park</h3>
+        <p>The BeltLine's first completed phase was its Eastside Trail, beginning at Piedmont Park, Atlanta's "Common Ground" since 1909.</p>
+		</br>
+		<small id="citation">
+			<a href='https://www.piedmontpark.org'/>Piedmont Park</a>
+		</small>
+		<img src="images/piedmont-park.jpg">
+    </section>
+    <section id='ponce-city'>
+        <h3>Ponce City Market</h3>
+        <p>After being shuddered for decades, the former Sears, Roebuck & Company building was fully renovated in 2014, offering an open marketplace, offices, and condomiums, complete with Skyline Park on the roof. Connected directly to the beltline, the Atlanta landmark is accessible by foot or bike to dozens of Atlanta neighborhoods.</p>
+    	</br>
+    	<small id="citation">
+    		Explore what's new at <a href='http://poncecitymarket.com'/>Ponce City Market</a>
+    	</small>
+		<img src="images/ponce-city-market-bikes.jpg" width="749" height="500"/>
+    </section>
+    <section id='o4w'>
+        <h3>O4W</h3>
+        <p>A direct result of the BeltLine's development, Historic Fourth Ward Park was the first park element of the BeltLine fully realized. Resting on the north edge of Old Fourth Ward, the park serves as vital development in one of Atlanta's oldest neighborhoods.</p>
+		<small id="citation">
+			Visit <a href='http://www.h4wpc.org/'/>O4W Park</a>
+		</small>
+		</br>
+		<img src="images/o4w-park.jpg"/>
+    </section>
+    <section id='o4w-warehouse'>
+        <h3>Transformation</h3>
+        <p>The creation of O4W Park has helped make the neighborhood a popular destination, spurring development along its edge on the BeltLine, transforming unused warehouses into restaurants and breweries.</p>
+		<small id="citation">
+            Read the latest on <a href='https://atlanta.curbed.com/2018/7/2/17524054/beltline-atlanta-new-realm-brewery-common-ground-eastside-trail'/>Common Ground</a>'s development
+        </small>
+		<img src="images/common-ground-warehouse.jpg" width="709" height="367"/>
+	</section>
+    <section id='inman-park'>
+        <h3>Inman Park</h3>
+        <p>Atlanta's first planned residential neighborhood, Inman Park's gorgeous Victorian homes make it one of Intown's most desirable neighborhoods, with one of the city's most highly anticipated summer festivals. With a MARTA Station and the beltLine constructed through it, the neighborhood is now connected to its city like never before.</p>
+    	</br>
+    	<small id="citation">
+            <a href='https://www.inmanpark.org'/>Inman Park</a>
+        </small>
+		<img src="images/inman-park-welcome.jpg" width="640" height="426"/>
+    </section>
+    <section id='krog'>
+        <h3>Krog Street Market</h3>
+        <p>After 100 years of operation, Atlanta Stove Works closed its doors in 1987. The factory remained vacant for the next three decades.</br></br>By 2012, however, the BeltLine had generated enough momentum that Paces Properties purchased the empty factory and created Krog Street Market. A new destination for Atlanta's Intown culture, the open market offers local food, produce, goods, as well as several restaurants and a full bar. After just a few years since its opening, Krog Street Market has been recognized as one of the "World's Best Food Halls" by Travel + Leisure, and featured on the Travel Channel.</p>
+        <small id="citation">
+            Check out <a href='http://www.krogstreetmarket.com'/>Krog Street Market</a>
+        </small>
+		</br>
+        <img src="images/krog-hop-city.jpg" width="615" height="411"/>
+    </section>
+    <section id='cabbagetown'>
+        <h3>Cabbagetown</h3>
+        <p>Before the BeltLine, Inman Park and Old Fourth Ward were cut off from other historic neighborhoods like Cabagetown by DeKalb Avenue and rail lines. However, these neighborhoods are now connected with a short walk, making it easier than ever for Atlantans to experience the unique character of each neighborhood. Cabbagetown's Wylie Street murals and annual Chomp & Stomp Festival help make it one of Atlanta's most eclectic neighborhoods.</p>
+        <small id="citation">
+        	Find things to do in <a href='http://www.cabbagetown.com'/>Cabbagetown</a>
+        </small>
+		</br>
+        <img src="images/cabbagetown-wylie-bike1.jpg" width="552" height="382"/>
+	</section>
+	<section id='west-side'>
+        <h3>West Side</h3>
+        <p>In the past year, the BeltLine has seen the planning, construction, and completion of the 3-mile Westside trail, which finally stitches together some of Atlanta's most historic neighborhoods on its west side. From Washington Park, past Atlanta University Center, and through historic West End, the BeltLine has brought cohesion and purposeful development in coordination with the city's long gestating efforts to revitalize the West Side.</p>
+    	</br>
+    	<small id="citation">
+    		You can read more about ongoing efforts on Atlanta's West Side <a href='https://www.westsidefuturefund.org'/>here.</a>
+    	</small>
+		</br>
+    	<img src="images/westside-trail.jpg" width="350" height="618"/>
+	</section>
+	<section id='washington-park'>
+        <h3>Washington Park</h3>
+        <p>At the north end of the Westside Trail is Washington Park, a 20-acre green space at the heart of an historic neighborhood of the same name. The park is the central gathering place for the community, which now hosts an annual Jamboree Fundraiser.</p>
+		</br>
+		<img src="images/washparksign.jpeg"/>
+    </section>
+	<section id='west-side-trail'>
+        <h3>West Side Trail</h3>
+        <p>From Washington Park, the trail winds south into West End, one of Atlanta's oldest historic neighborhoods. Listed on the National Register of Historic Places, the tree-lined neighborhood has been here since 1835, and is home to multiple parks, award-winning schools, and tremendous growth potential.</p>
+		</br>
+		<img src="images/west-end-welcome.jpg"/>
+	</section>
+	<section id='west-side-warehouse'>
+        <h3>Westside Transformed</h3>
+        <p>Initial development along the BeltLine's Westside trail has been Lee + White, an adaptive re-use project converting a sprawling 426,000 square feet of unused warehouses into open space for local breweries and eateries, including Monday Night Brewing, Wild HEaven Beer, ASW Distillery, and Hop City.</p>
+		</br>
+		<small id="citation">
+			Read more about <a href='http://www.leeandwhiteatl.com/press.html'/>Lee + White.</a>
+		</small>
+		</br>
+		<img src="images/leeandwhite.jpg" width="512" height="341"/>
+	</section>
+	<section id='south-side'>
+        <h3>South Side Secured</h3>
+        <p>One of the BeltLine's more recent announcements was the acquisition of the land south of the city. The City of Atlanta purchased the land in spring 2018, enabling the union of the city's far Wast and West sides.</p>
+        <small id="citation">
+        	<a href='https://atlanta.curbed.com/2018/3/16/17127226/atlanta-mayor-beltline-southside-trail'/>Read details here.</a>
+    	</small>
+	</section>
+	<section id='pitt-yards'>
+        <h3>Revitalizing</h3>
+        <p>As with other neighborhoods, the BeltLine's expansion to the city's Southside has brought developers to the area. One of the more exciting projects is Pittsburgh Yards, a mixed-use project on an unused, 31-acre industrial lot. The project promises to “develop an economic catalyst in an area where living-wage jobs and economic opportunities are scarce.”</p>
+    	</br>
+    	<small id="citation">
+        	<a href='http://columbiaven.com/projects/pittsburgh-yards/'/>Read more about the project here.</a>
+    	</small>
+    	</br>
+		<img src="images/pitt-yards-plan.jpg" width="640" height="466"/>
+	</section>
+	<section id='south-bridge'>
+        <h3>Re-Connecting Neighborhoods</h3>
+        <p>As we've seen elsewhere, the BeltLine's simplest yet profound accomplishment has been to re-thread neighborhoods together that have been geographically isolated by highways and rail lines. The Southside Trail will redevelop unused rail lines to overcome the geographic barrier created by a different set of raillines at University Ave and McDonough Blvd.</p>
+        <img src="images/southside-bridge.jpg" width="589" height="393"/>
+	</section>
+	<section id='bill-kennedy'>
+        <h3>Connecting East and West</h3>
+        <p>As the BeltLine fuels growth along its planned route, developers are building condos, grocery stores, bars, restaurants (and parking lots) in long-neglected lots. Currently, the Southside Trail is being cleared as projects are built along its route. Proposals have been made about how the BeltLine should traverse arguably its largest physical barrier - I-20 at Bill Kennedy Parkway.</br>When completed, the quarters of the city that were created by major highways through the city center will be reunited.</p>
+		</br>
+		<small id="citation">
+        	<a href='https://beltline.org/2016/05/13/bill-kennedy-way-design/'/>Read about the proposals.</a>
+    	</small>
+    	<img src="images/bill-kennedy-plans.jpg" width="745" height="327"/>
+	</section>
+
+	<section id='future'>
+        <h3>The Future</h3>
+        <p>There are many plans for the BeltLine's future, including completing networks in Midtown, north of Piedmont Park, where necessary land has been secured. Most crucially, the BeltLine is currently at a crossroads: sustained community action will be required to ensure the BeltLine's original vision of light rail along the project, and affordable housing units along its course so current residents are not forced from their homes.</p>
+    </br>
+    <small id="citation">
+    	<a href='https://ryangravel.com'/>Get Involved</a>
+    </small>
+	</section>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibW1haW56ZXIiLCJhIjoiY2l5ZDhjZnRyMDB0cDJ3cWtzdWt3azNlcyJ9.EiBO7S8zLzdYg2lnVxwQVg';
+
+// insert map style from mapbox studio account
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mmainzer/cjl80t7fk26xf2rnydbx8734w',
+    center: [-84.388257, 33.769812],
+    zoom: 12.22,
+    bearing: 0,
+    pitch: 0
+});
+
+// The 'building' layer in the mapbox-streets vector source contains building-height data from OpenStreetMap
+map.on('load', function() {
+	// Insert the layer beneath any symbol layer.
+	var layers = map.getStyle().layers;
+
+	var labelLayerId;
+	for (var i = 0; i < layers.length; i++) {
+		if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+			labelLayerId = layers[i].id;
+			break;
+		}
+	}
+
+	map.addLayer({
+		'id': '3d-buildings',
+		'source': 'composite',
+		'source-layer': 'building',
+		'filter': ['has', 'extrude'],
+		'type': 'fill-extrusion',
+		'minzoom': 15,
+		'paint': {
+			'fill-extrusion-color': '#aaa',
+
+			// use an 'interpolate' expression to add a smooth transition effect to the
+            // buildings as the user zooms in
+            'fill-extrusion-height': [
+                "interpolate", ["linear"], ["zoom"],
+                15, 0,
+                15.05, ["get", "height"]
+            ],
+            'fill-extrusion-base': [
+                "interpolate", ["linear"], ["zoom"],
+                15, 0,
+                15.05, ["get", "min_height"]
+            ],
+            'fill-extrusion-opacity': .8
+        }
+    }, labelLayerId);
+});
+
+var chapters = {
+    'beltline': {
+        bearing: 0,
+        center: [-84.388257, 33.769812],
+        zoom: 12.22,
+        pitch: 0
+    },
+    'piedmont-park': {
+        duration: 6000,
+        center: [-84.374525, 33.784114],
+        bearing: 28.80,
+        zoom: 16.52,
+        pitch: 57.50
+    },
+    'ponce-city': {
+        center: [-84.365760, 33.772126],
+        bearing: -148.16,
+		zoom: 17.51,
+        speed: 0.6,
+        pitch: 60
+    },
+    'o4w': {
+        bearing: -12.26,
+        center: [-84.364650, 33.766695],
+        zoom: 17.51,
+        pitch: 60,
+        speed: 0.5
+    },
+    'o4w-warehouse': {
+        bearing: -37.86,
+        center: [-84.362884, 33.767722],
+        zoom: 16.45,
+        pitch: 0,
+        speed: 0.5
+    },
+    'inman-park': {
+        bearing: -114.49,
+        center: [-84.353524, 33.756094],
+        zoom: 16.66,
+		pitch: 60
+    },
+    'krog': {
+        bearing: 0,
+        center: [-84.364530, 33.754697],
+        zoom: 16.36,
+        pitch: 0
+    },
+    'cabbagetown': {
+        bearing: 0,
+        center: [-84.361931, 33.749875],
+        zoom: 15.9,
+        pitch: 0
+    },
+	'west-side': {
+        bearing: 0,
+        center: [-84.414499, 33.755244],
+        zoom: 13.8,
+        pitch: 0
+    },
+	'washington-park': {
+        bearing: -163.98,
+        center: [-84.424449, 33.756170],
+        zoom: 15.6,
+        pitch: 49
+    },
+	'west-side-trail': {
+		bearing: 133.62,
+        center: [-84.433684, 33.741228],
+        zoom: 17.25,
+        pitch: 60
+	},
+	'west-side-warehouse': {
+		bearing: 22.4,
+        center: [-84.419474, 33.730603],
+        zoom: 15.73,
+        pitch: 50.5
+	},
+	'south-side': {
+		bearing: 0,
+        center: [-84.374536, 33.728652],
+        zoom: 13.19,
+        pitch: 0
+	},
+	'pitt-yards': {
+		bearing: 0,
+        center: [-84.399696, 33.721095],
+        zoom: 17.02,
+        pitch: 0
+	},
+	'south-bridge': {
+		bearing: 20,
+        center: [-84.389006, 33.721875],
+        zoom: 16.74,
+        pitch: 55.5
+	},
+	'bill-kennedy': {
+		bearing: -92.8,
+        center: [-84.365208, 33.740195],
+        zoom: 14.51,
+        pitch: 60
+	},
+	'future': {
+		bearing: 0,
+        center: [-84.388257, 33.769812],
+        zoom: 12.22,
+        pitch: 0
+	}
+};
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+
+var activeChapterName = 'beltline';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+
+    map.flyTo(chapters[chapterName]);
+
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+
+    activeChapterName = chapterName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+
+</script>
+
+</body>
+</html>
